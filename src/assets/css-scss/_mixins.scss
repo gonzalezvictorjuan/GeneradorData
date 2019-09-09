@@ -1,0 +1,13 @@
+// Forma de uso
+//  1° Importar el archivo en nuestro scss
+//          @import "../../../assets/css-scss/mixins";
+//  2° Incluir el mixin deseado
+//          @include end-center;
+//
+//
+// end-center
+@mixin end-center {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}

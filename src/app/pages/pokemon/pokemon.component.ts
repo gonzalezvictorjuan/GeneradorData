@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PokemonModel } from '../models/pokemon.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-pokemon',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PokemonComponent implements OnInit {
 
+  pokemon = new PokemonModel({});
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  guardar( form: NgForm): void {
+    console.log(form);
+    console.log(this.pokemon);
   }
 
 }

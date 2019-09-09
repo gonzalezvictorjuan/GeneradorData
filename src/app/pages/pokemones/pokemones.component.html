@@ -1,1 +1,57 @@
-<p>pokemones works!</p>
+<div class="container ml-15 mr-15 w-100">
+    <div class="row">
+        <h1 class="col">Listado de Pokémones</h1>
+        <div class="col end-center">
+            <button class="btn btn-primary" routerLink="/pokemon/nuevo">
+        <i class="fa fa-plus"></i>
+        Agregar
+      </button>
+        </div>
+    </div>
+
+    <hr>
+    <table class="table table-striped table-dark mt-3 animated fadeIn faster">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Pokémon</th>
+                <th scope="col">HP</th>
+                <th scope="col">Attack</th>
+                <th scope="col">Defense</th>
+                <th scope="col">DTools</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+                <td>@mdo</td>
+                <td>@mdo</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+
+    <div class="alert alert-warning text-center mt-3">
+        <h4 class="alert-heading">No hay registros</h4>
+        <p>
+            <i class="fa fa-exclamation fa-2x"></i>
+        </p>
+    </div>
+
+    <div class="alert alert-info text-center mt-3">
+        <h4 class="alert-heading">Cargando..</h4>
+        <p>
+            <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+        </p>
+        <p class="mb-0">
+            Espere por favor..
+        </p>
+    </div>
+
+
+</div>

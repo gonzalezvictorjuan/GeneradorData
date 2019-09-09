@@ -1,0 +1,10 @@
+@import "../../../assets/css-scss/mixins";
+.container {
+    .row {
+        .col {
+            &.end-center {
+                @include end-center;
+            }
+        }
+    }
+}
