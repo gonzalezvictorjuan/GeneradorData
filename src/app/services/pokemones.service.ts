@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PokemonModel } from '../pages/models/pokemon.model';
-import { map } from 'rxjs/operators';
+import { map, delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +20,38 @@ export class PokemonesService {
   private DefIV: number;
   private StamIV: number;
 
-
-
-
-
   // tslint:disable-next-line: variable-name
   constructor(private _httpClient: HttpClient ) { }
+
+  borrarPokemon( idFirebase: string ) {
+    return this._httpClient.delete(`${this.url}/pokemones/${idFirebase}.json`);
+  }
+
+  getPokemonById( idFirebase: string ){
+    return this._httpClient.get(`${this.url}/pokemones/${idFirebase}.json`);
+  }
+
+  getPokemones() {
+    return this._httpClient.get(`${this.url}/pokemones.json`).pipe(
+      map( this._crearArrPokemones ), // Forma pipicucu de poner lo mismo
+      delay(1500)
+    );
+  }
+
+  private _crearArrPokemones(pokemonesObj: object) {
+    const pokes: PokemonModel[] = [];
+
+    if (pokemonesObj === null) { return []; }
+
+    Object.keys( pokemonesObj ).forEach( key => {
+      const poke: PokemonModel = pokemonesObj[key];
+      poke.idFirebase = key;
+
+      pokes.push(poke);
+    });
+
+    return pokes;
+  }
 
   crearPokemon( poke: PokemonModel) {
     const url = `${this.url}/pokemones.json`;
