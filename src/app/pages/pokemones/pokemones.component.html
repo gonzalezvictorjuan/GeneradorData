@@ -42,13 +42,17 @@
                             (click)="borrarPoke( poke, i )">
                         <i class="fa fa-trash"></i>
                     </button>
+
+                    <button class="btn btn-success ml-1" (click)="calcularLvl( poke )">
+                        <i class="fa fa-sort-amount-up"></i>
+                    </button>
+                    
                 </td>    
                             
             </tr>
 
         </tbody>
     </table>
-
 
     <div *ngIf="!cargando && pokemones.length == 0" class="alert alert-warning text-center mt-3 animated fadeIn faster">
         <h4 class="alert-heading">No hay registros</h4>
@@ -67,5 +71,11 @@
         </p>
     </div>
 
+
+    <div class="text.center animated fadeIn faster">
+        <button class="btn btn-success" (click)="test()">
+            <i class="fa fa-brain"></i>
+        </button>
+    </div>
 
 </div>
