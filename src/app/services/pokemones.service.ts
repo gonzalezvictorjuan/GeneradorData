@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PokemonModel } from '../pages/models/pokemon.model';
 import { map, delay } from 'rxjs/operators';
+import { GeneradorRankService } from './generador-rank.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class PokemonesService {
 
   private url = 'https://generatedatarankpvpgo.firebaseio.com';
 
-  constructor(private _httpClient: HttpClient ) { }
+  constructor(private _httpClient: HttpClient,
+              private generador: GeneradorRankService ) { }
 
   /////////////////////////////////////////////////
   // Metodos Publicos
@@ -49,6 +51,8 @@ export class PokemonesService {
   crearPokemon(poke: PokemonModel) {
     const url = `${this.url}/pokemones.json`;
 
+    poke.greatHighProduct = this.generador.getPerfecto(poke);
+
     return this._httpClient.post(url, poke)
       .pipe(
         map((resp: any) => {
@@ -64,6 +68,8 @@ export class PokemonesService {
    * @param {PokemonModel} poke
    */
   actualizarPokemon(poke: PokemonModel) {
+    poke.greatHighProduct = this.generador.getPerfecto(poke);
+
     const pokeTemp = {
       ...poke
     };

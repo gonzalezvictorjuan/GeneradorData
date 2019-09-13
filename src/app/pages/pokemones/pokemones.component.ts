@@ -3,6 +3,7 @@ import { PokemonesService } from 'app/services/pokemones.service';
 import { PokemonModel } from '../models/pokemon.model';
 import Swal from 'sweetalert2';
 import { CalcularService } from '../../services/calcular.service';
+import { GeneradorRankService } from '../../services/generador-rank.service';
 
 @Component({
   selector: 'app-pokemones',
@@ -15,7 +16,8 @@ export class PokemonesComponent implements OnInit {
   cargando = false;
 
   constructor(private pokeService: PokemonesService,
-              private calcular: CalcularService) { }
+              private calcular: CalcularService,
+              private generador: GeneradorRankService) { }
 
   ngOnInit() {
     this.cargando = true;
@@ -32,21 +34,16 @@ export class PokemonesComponent implements OnInit {
 
   }
 
-  test() { console.log('test');  }
-
-  calcularLvl(poke: PokemonModel): void {
+  test(p: PokemonModel) {
     this.calcular.reset();
+    this.calcular.definirBasesStats(p.baseAttack, p.baseDefense, p.baseHP);
+    this.calcular.definirIVsStats(15, 15, 15);
 
-    this.calcular.definirBasesStats(poke.baseAttack, poke.baseDefense, poke.baseHP);
-    
-    this.calcular.definirIVsStats(0, 13, 14);
-    
-    this.calcular.getLevel();
-    this.calcular.getCP();
-    this.calcular.getAttack();
-    this.calcular.getDefense();
-    this.calcular.getStamina();
-    this.calcular.getProductOfStats();
+    console.log(this.calcular.getProductOfStats());
+  }
+
+  generarRank(poke: PokemonModel): void {
+    this.generador.generarRank(poke);
   }
 
 

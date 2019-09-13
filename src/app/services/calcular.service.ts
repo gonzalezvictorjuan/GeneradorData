@@ -10,7 +10,6 @@ import Big from 'big.js';
 export class CalcularService {
 
   // Bases STATS
-
   private BaseAtk: number = 0;
   private BaseDef: number = 0;
   private BaseStam: number = 0;
@@ -27,10 +26,6 @@ export class CalcularService {
   private Defense: number = 0;
   private Stamina: number = 0;
   private ProductOfStats: number = 0;
-
-
-
-
 
   private CPMultiplier: CPMModel[] = [];
 
@@ -57,7 +52,6 @@ export class CalcularService {
    * @param {number} BaseStam
    */
   public definirBasesStats(BaseAtk: number, BaseDef: number, BaseStam: number): void {
-
     this.BaseAtk = Number(BaseAtk);
     this.BaseDef = Number(BaseDef);
     this.BaseStam = Number(BaseStam);
@@ -74,11 +68,9 @@ export class CalcularService {
     this.StamIV = StamIV;
   }
 
-  public getLevel() {
-    // =SI(Q12=1500,// MIN(O12+0.5,40),// O12)
-
+  public getLevel() { // =SI(Q12=1500,// MIN(O12+0.5,40),// O12)
     if ((this.BaseAtk === 0) || (this.BaseDef === 0) || (this.BaseStam === 0)) {
-      console.log('error, definir Stats Bases');
+      // console.log('error, definir Stats Bases');
       return -1;
     }
 
@@ -92,22 +84,11 @@ export class CalcularService {
     }
   }
 
-  public getCP() {
-    // =REDONDEAR.MENOS(
-                        // (
-                          // ($B$8+B23)*(($C$8+C23)^0.5)*(($D$8+D23)^0.5)
-                          // *
-                          // BUSCARV(F13,CPM!A:B,2,FALSO)^2
-                        // )/10
-                    // )
+  public getCP() { // =REDONDEAR.MENOS((($B$8+B23)*(($C$8+C23)^0.5)*(($D$8+D23)^0.5)*BUSCARV(F13,CPM!A:B,2,FALSO)^2)/10)
     const CPBase = this._getCPBase();
     const F12 = (this.Level) ? this.Level : this.getLevel();
     const cpmvalue = this._getCPMValue(F12);
-    const value = Math.floor(
-      (
-        CPBase * Math.pow(cpmvalue, 2)
-      ) / 10
-    );
+    const value = Math.floor((CPBase * Math.pow(cpmvalue, 2)) / 10);
 
     this.CP = value;
     console.log('CP=' + this.CP);
@@ -148,15 +129,12 @@ export class CalcularService {
     const H12 = (this.Attack) ? this.Attack : this.getAttack();
     const I12 = (this.Defense) ? this.Defense : this.getDefense();
     const J12 = (this.Stamina) ? this.Stamina : this.getStamina();
-
     const value = (H12 * I12 * J12);
 
     this.ProductOfStats = value;
-    console.log(value);
+    console.log('ProductOfStats=' + value);
     return value;
   }
-
-
 
   /////////////////////////////////////////////////
   // Metodos Privados
@@ -171,29 +149,26 @@ export class CalcularService {
     const Atk = this.BaseAtk + this.AtkIV;
     const Def = Math.sqrt(this.BaseDef + this.DefIV);
     const Stam = Math.sqrt(this.BaseStam + this.StamIV);
-
     const value = (Atk * Def * Stam);
+
     // console.log('_getCPBase= ' + value);
     return value;
   }
-
 
   private _getMIN() { // MIN(O12+0.5,40)
     const aux = this._getO12() + 0.5;
     const aux2 = (40);
     if (aux >= aux2) { // MIN
-      // console.log('MIN(O12+0.5,40)=' + aux2);
       return aux2;
     } else {
-      // console.log('MIN(O12+0.5,40)=' + aux);
       return aux;
     }
   }
 
-
   private _getO12() { // =BUSCARV(M12, CPM!B: C, 2, VERDADERO)
     const M12 = (this._getM12());
-    const value = (this._getCPMLevel(M12)); // LEVEL
+    const value = (this._getCPMLevel(M12));
+
     // console.log('O12=' + value);
     return value;
   }
@@ -201,6 +176,7 @@ export class CalcularService {
   private _getM12() { // =(15000/(($B$8+B12)*(($C$8+C12)^0.5)*(($D$8+D12)^0.5)))^0.5
     const CPBase = this._getCPBase();
     const value = Math.sqrt(15000 / CPBase);
+
     // console.log('M12=' + value);
     return value;
   }
@@ -239,35 +215,24 @@ export class CalcularService {
     return lvl;
   }
 
-
-
-
-
-  public _defineCPM(): void {
+  private _defineCPM(): void {
     if (this.CPMultiplier.length !== 0) {
-      // console.log(this.CPMultiplier);
       return;
     }
 
     this._http.get('api/cpm').subscribe(
       (res: []) => {
-        // console.log(res);
         this.CPMultiplier = res;
       }
     );
   }
 
-  private _getQ12() {
-    // =REDONDEAR.MENOS(
-    // (
-    // ($B$8+B12)*(($C$8+C12)^0.5)*(($D$8+D12)^0.5)  <-- _getCPBase()
-    // *BUSCARV(MIN(O12+0.5,40),CPM!A:B,2,FALSO)^2  <-- _getCPMultiplicador( _getMIN ) ^ 2
-    // )/10
-    // )
+  private _getQ12() { // =REDONDEAR.MENOS((($B$8+B12)*(($C$8+C12)^0.5)*(($D$8+D12)^0.5)*BUSCARV(MIN(O12+0.5,40),CPM!A:B,2,FALSO)^2)/10)
     const CPBase = this._getCPBase();
     const min = this._getMIN();
     const CPM = this._getCPMValue(min);
     const value = (Math.floor((CPBase * Math.pow(CPM, 2)) / 10));
+
     // console.log('Q12=' + value);
     return value;
   }
