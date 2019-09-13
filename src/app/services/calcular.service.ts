@@ -70,7 +70,7 @@ export class CalcularService {
 
   public getLevel() { // =SI(Q12=1500,// MIN(O12+0.5,40),// O12)
     if ((this.BaseAtk === 0) || (this.BaseDef === 0) || (this.BaseStam === 0)) {
-      // console.log('error, definir Stats Bases');
+      // // console.log('error, definir Stats Bases');
       return -1;
     }
 
@@ -91,7 +91,7 @@ export class CalcularService {
     const value = Math.floor((CPBase * Math.pow(cpmvalue, 2)) / 10);
 
     this.CP = value;
-    console.log('CP=' + this.CP);
+    // console.log('CP=' + this.CP);
     return value;
   }
 
@@ -101,7 +101,7 @@ export class CalcularService {
     const value = (ataque * N12);
 
     this.Attack = value;
-    console.log('Ataque=' + value);
+    // console.log('Ataque=' + value);
     return value;
   }
 
@@ -111,17 +111,17 @@ export class CalcularService {
     const value = (Defense * N12);
 
     this.Defense = value;
-    console.log('Defensa=' + value);
+    // console.log('Defensa=' + value);
     return value;
   }
 
   public getStamina() {
     const Stamina = this.BaseStam + this.StamIV;
     const N12 = this._getN12();
-    const value = Math.round(Stamina * N12);
+    const value = Math.floor(Stamina * N12);
 
     this.Stamina = value;
-    console.log('Stamina=' + value);
+    // console.log('Stamina=' + value);
     return value;
   }
 
@@ -132,7 +132,7 @@ export class CalcularService {
     const value = (H12 * I12 * J12);
 
     this.ProductOfStats = value;
-    console.log('ProductOfStats=' + value);
+    // console.log('ProductOfStats=' + value);
     return value;
   }
 
@@ -151,7 +151,7 @@ export class CalcularService {
     const Stam = Math.sqrt(this.BaseStam + this.StamIV);
     const value = (Atk * Def * Stam);
 
-    // console.log('_getCPBase= ' + value);
+    // // console.log('_getCPBase= ' + value);
     return value;
   }
 
@@ -169,7 +169,7 @@ export class CalcularService {
     const M12 = (this._getM12());
     const value = (this._getCPMLevel(M12));
 
-    // console.log('O12=' + value);
+    // // console.log('O12=' + value);
     return value;
   }
 
@@ -177,7 +177,7 @@ export class CalcularService {
     const CPBase = this._getCPBase();
     const value = Math.sqrt(15000 / CPBase);
 
-    // console.log('M12=' + value);
+    // // console.log('M12=' + value);
     return value;
   }
 
@@ -233,7 +233,7 @@ export class CalcularService {
     const CPM = this._getCPMValue(min);
     const value = (Math.floor((CPBase * Math.pow(CPM, 2)) / 10));
 
-    // console.log('Q12=' + value);
+    // // console.log('Q12=' + value);
     return value;
   }
 

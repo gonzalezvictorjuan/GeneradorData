@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { PokemonesService } from './services/pokemones.service';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { MockService } from './services/mock.service';
+import { CalcularService } from './services/calcular.service';
+import { GeneradorRankService } from './services/generador-rank.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,10 @@ import { MockService } from './services/mock.service';
     }),
   ],
   providers: [
-    PokemonesService
+    PokemonesService,
+    CalcularService,
+    MockService,
+    GeneradorRankService
   ],
   bootstrap: [AppComponent]
 })

@@ -8,23 +8,30 @@ import { PokemonRankModel } from '../pages/models/pokemon-rank.model';
 })
 export class GeneradorRankService {
 
-  rank: PokemonRankModel[] = [];
-  perfecto: number = 0;
+  private rank: PokemonRankModel[] = [];
+  private perfecto: number = 0;
+  private identificador = '';
 
   constructor(private calcular: CalcularService) { }
 
   generarRank(poke: PokemonModel) {
     this.generarAllRank(poke);
-    
-    this._ordenarRank();
-    this._cortar();
 
-    console.log(this.rank);
+    this._ordenarRank();
+
+    // this._cortar();
+
+    this._asignarRank();
+
+    // console.log(this.rank);
+
+    this._saveAsProject();
   }
 
 
   generarAllRank(poke: PokemonModel) {
     this.perfecto = 0;
+    this.identificador = poke.identificador.replace(' ', '-');
     for (let A = 0; A < 16; A++) {
       for (let D = 0; D < 16; D++) {
         for (let S = 0; S < 16; S++) {
@@ -32,12 +39,12 @@ export class GeneradorRankService {
         }
       }
     }
+
+    this._eliminarRepetidos();
   }
 
   getPerfecto(poke: PokemonModel) {
-    if (this.rank.length === 0) {
-      this.generarAllRank(poke);
-    }
+    this.generarAllRank(poke);
 
     this.rank.forEach(element => {
       if (element.ProductOfStats >= this.perfecto) {
@@ -69,22 +76,71 @@ export class GeneradorRankService {
     pRank.Defense = this.calcular.getDefense();
     pRank.Stamina = this.calcular.getStamina();
     pRank.ProductOfStats = this.calcular.getProductOfStats();
+    pRank.Rank = 0;
 
     return pRank;
   }
 
   private _ordenarRank(): void {
-    let aux = this.rank;
+    this.rank = this.rank.sort( this._compare );
+  }
 
-
+  private _compare(a: PokemonRankModel, b: PokemonRankModel) {
+    return a.compare(b);
   }
 
   private _cortar(): void {
     // const limite = 1000;
-    const limite = 1;
-    // console.log(this.rank.length);
-
+    const limite = 10;
     this.rank = this.rank.slice(0, limite);
+  }
+
+  private _asignarRank(): void {
+    for (let index = 0; index < this.rank.length; index++) {
+      this.rank[index].Rank = index + 1;
+    }
+  }
+
+  private _eliminarRepetidos(): void {
+    // this.rank = this.rank.from(new Set(this.rank));
+
+      let unique: PokemonRankModel[] = [];
+      let pushear = true;
+
+      this.rank.forEach(element => {
+        if (unique.length === 0) {
+          unique.push(element);
+        } else {
+          unique.forEach(element2 => {
+            if ((element.AtkIV === element2.AtkIV) &&
+                (element.DefIV === element2.DefIV) &&
+                (element.StamIV === element2.StamIV)
+            ) {
+              pushear = false;
+            }
+          });
+
+          if (pushear) {
+            unique.push(element);
+          }
+          pushear = true;
+        }
+      });
+      this.rank = unique;
+  }
+
+  private _saveAsProject() {
+    // const aux = JSON.stringify(this.rank, null, '\t');
+    const aux = JSON.stringify(this.rank, null, 4);
+    this._writeContents(aux, this.identificador + '.txt', 'text/plain');
+  }
+
+  private _writeContents(content, fileName, contentType) {
+    const a = document.createElement('a');
+    const file = new Blob([content], { type: contentType });
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
   }
 
 }

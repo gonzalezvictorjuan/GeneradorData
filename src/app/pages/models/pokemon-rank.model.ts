@@ -19,6 +19,8 @@ export class PokemonRankModel {
   Stamina: number;
   ProductOfStats: number;
 
+  Rank: number;
+
   constructor(pokeR?) {
     if (pokeR) {
       this.identificador = pokeR.identificador;
@@ -34,6 +36,7 @@ export class PokemonRankModel {
       this.Defense = pokeR.Defense;
       this.Stamina = pokeR.Stamina;
       this.ProductOfStats = pokeR.ProductOfStats;
+      this.Rank = pokeR.Rank;
     }
   }
 
@@ -44,11 +47,19 @@ export class PokemonRankModel {
    * @param pokeR
    */
   compare(pokeR): number {
-    if (this.ProductOfStats < pokeR.ProductOfStats) {
+    if (this.ProductOfStats > pokeR.ProductOfStats) {
       return -1;
     }
 
-    if (this.ProductOfStats > pokeR.ProductOfStats) {
+    if (this.ProductOfStats < pokeR.ProductOfStats) {
+      return 1;
+    }
+
+    if (this.StamIV > pokeR.StamIV) {
+      return -1;
+    }
+
+    if (this.StamIV < pokeR.StamIV) {
       return 1;
     }
 
