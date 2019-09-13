@@ -18,6 +18,8 @@ export class PokemonRankModel {
   Defense: number;
   Stamina: number;
   ProductOfStats: number;
+  
+  PorcentajeIV: number;
 
   Rank: number;
 
@@ -37,6 +39,7 @@ export class PokemonRankModel {
       this.Stamina = pokeR.Stamina;
       this.ProductOfStats = pokeR.ProductOfStats;
       this.Rank = pokeR.Rank;
+      this.PorcentajeIV = pokeR.PorcentajeIV;
     }
   }
 

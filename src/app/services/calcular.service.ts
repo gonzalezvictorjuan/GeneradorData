@@ -25,6 +25,7 @@ export class CalcularService {
   private Attack: number = 0;
   private Defense: number = 0;
   private Stamina: number = 0;
+  private PorcentajeIV: number = 0;
   private ProductOfStats: number = 0;
 
   private CPMultiplier: CPMModel[] = [];
@@ -44,6 +45,7 @@ export class CalcularService {
     this.Defense = 0;
     this.Stamina = 0;
     this.ProductOfStats = 0;
+    this.PorcentajeIV = 0;
   }
 
   /**
@@ -82,6 +84,15 @@ export class CalcularService {
       this.Level = this._getO12();
       return this._getO12();
     }
+  }
+
+  public getPorcentajeIV() {
+    const perfecto = 15 + 15 + 15;
+    const actual = this.AtkIV + this.DefIV + this.StamIV;
+
+    const value = ((actual * 100) / perfecto);
+    this.PorcentajeIV = value;
+    return value;
   }
 
   public getCP() { // =REDONDEAR.MENOS((($B$8+B23)*(($C$8+C23)^0.5)*(($D$8+D23)^0.5)*BUSCARV(F13,CPM!A:B,2,FALSO)^2)/10)

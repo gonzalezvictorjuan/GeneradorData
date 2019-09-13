@@ -76,6 +76,7 @@ export class GeneradorRankService {
     pRank.Defense = this.calcular.getDefense();
     pRank.Stamina = this.calcular.getStamina();
     pRank.ProductOfStats = this.calcular.getProductOfStats();
+    pRank.PorcentajeIV = this.calcular.getPorcentajeIV();
     pRank.Rank = 0;
 
     return pRank;
