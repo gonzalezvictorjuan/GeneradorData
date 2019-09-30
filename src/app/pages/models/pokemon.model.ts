@@ -6,6 +6,7 @@ export class PokemonModel {
   baseAttack: number;
   baseDefense: number;
 
+  evoluciones: [];
   greatHighProduct: number;
 
   constructor(poke?) {
@@ -17,6 +18,7 @@ export class PokemonModel {
       this.baseAttack = Number(poke.baseAttack);
       this.baseDefense = Number(poke.baseDefense);
       this.greatHighProduct = poke.greatHighProduct;
+      this.evoluciones = poke.evoluciones || null;
     }
   }
 

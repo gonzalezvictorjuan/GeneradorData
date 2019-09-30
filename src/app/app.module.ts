@@ -12,6 +12,7 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { MockService } from './services/mock.service';
 import { CalcularService } from './services/calcular.service';
 import { GeneradorRankService } from './services/generador-rank.service';
+import { PokeapiService } from './services/pokeapi.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { GeneradorRankService } from './services/generador-rank.service';
     PokemonesService,
     CalcularService,
     MockService,
-    GeneradorRankService
+    GeneradorRankService,
+    PokeapiService
   ],
   bootstrap: [AppComponent]
 })

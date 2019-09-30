@@ -12,8 +12,6 @@
     <hr>
 </div>
 
-
-
 <div class="animated fadeIn faster">
     <div class="col">
         <form (ngSubmit)="guardar( pok )" #pok="ngForm">
@@ -40,12 +38,7 @@
             </div>
 
             <div class="row">
-                <!-- HP -->
-                <div class="form-group col">
-                    <label>Base HP</label>
-                    <input type="text" class="form-control" placeholder="Base HP del Pokémon" requited [(ngModel)]="pokemon.baseHP" name="baseHP">
-                </div>
-
+                
                 <!-- Attack -->
                 <div class="form-group col">
                     <label>Base Attack</label>
@@ -58,9 +51,24 @@
                     <input type="text" class="form-control" placeholder="Base Defense del Pokémon" requited [(ngModel)]="pokemon.baseDefense" name="baseDefense">
                 </div>
 
+                <!-- HP -->
+                <div class="form-group col">
+                    <label>Base HP</label>
+                    <input type="text" class="form-control" placeholder="Base HP del Pokémon" requited [(ngModel)]="pokemon.baseHP"
+                        name="baseHP">
+                </div>
+                
             </div>
 
             <div class="row text-right">
+                <!-- Great High Product -->
+                <div class="form-group col-3 offset-9">
+                    <label>Evoluciones</label>
+                    <input type="text" class="form-control text-right" disabled="disabled" placeholder="evoluciones"
+                        [(ngModel)]="pokemon.evoluciones" name="evoluciones">
+                    <small class="form-text text-muted">Este campo es autogenerado</small>
+                </div>
+
                 <!-- Great High Product -->
                 <div class="form-group col-3 offset-9">
                     <label>Great High Product</label>

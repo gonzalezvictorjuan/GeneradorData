@@ -4,6 +4,7 @@ import { PokemonModel } from '../models/pokemon.model';
 import Swal from 'sweetalert2';
 import { CalcularService } from '../../services/calcular.service';
 import { GeneradorRankService } from '../../services/generador-rank.service';
+import { PokeapiService } from '../../services/pokeapi.service';
 
 @Component({
   selector: 'app-pokemones',
@@ -15,11 +16,16 @@ export class PokemonesComponent implements OnInit {
   pokemones: PokemonModel[] = [];
   cargando = false;
 
+  pokeLista: any[];
+
   constructor(private pokeService: PokemonesService,
               private calcular: CalcularService,
-              private generador: GeneradorRankService) { }
+              private generador: GeneradorRankService,
+              private pokeapi: PokeapiService) { }
 
   ngOnInit() {
+    this.pokeapi.generarLista();
+    console.log(this.pokeLista);
     this.cargando = true;
 
     this.pokeService.getPokemones().subscribe(
@@ -34,16 +40,17 @@ export class PokemonesComponent implements OnInit {
 
   }
 
-  test(p: PokemonModel) {
-    this.calcular.reset();
-    this.calcular.definirBasesStats(p.baseAttack, p.baseDefense, p.baseHP);
-    this.calcular.definirIVsStats(15, 15, 15);
+  // test(p: PokemonModel) {
+  //   this.calcular.reset();
+  //   this.calcular.definirBasesStats(p.baseAttack, p.baseDefense, p.baseHP);
+  //   this.calcular.definirIVsStats(15, 15, 15);
 
-    console.log(this.calcular.getProductOfStats());
-  }
+  //   console.log(this.calcular.getProductOfStats());
+  // }
 
   generarRank(poke: PokemonModel): void {
-    this.generador.generarRank(poke);
+    // console.log(poke);
+    // this.generador.generarRank(poke);
   }
 
 
@@ -65,4 +72,8 @@ export class PokemonesComponent implements OnInit {
     });
   }
 
+  testPokeApi() {
+    this.pokeLista = this.pokeapi.pokemones;
+    console.log(this.pokeLista);
+  }
 }

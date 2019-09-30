@@ -73,9 +73,29 @@
 
 
     <div class="text.center animated fadeIn faster">
-        <button class="btn btn-success">
+        <button class="btn btn-success"
+        (click)="testPokeApi()">
             <i class="fa fa-brain"></i>
         </button>
     </div>
+
+    <table class="table table-striped table-dark mt-3 animated fadeIn faster">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Pokémon</th>
+                <th scope="col">Evo</th>                    
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let pok of pokeLista; let i = index">
+                <th scope="row">{{ i + 1}}</th>
+                <td>{{ pok.poke }}</td>
+                <td>{{ pok.evo }}</td>
+                                    
+            </tr>
+    
+        </tbody>
+    </table>
 
 </div>

@@ -15,6 +15,7 @@ export class GeneradorRankService {
   constructor(private calcular: CalcularService) { }
 
   generarRank(poke: PokemonModel) {
+    console.log('Inicio del generador de Rank');
     this.generarAllRank(poke);
 
     this._ordenarRank();
@@ -26,6 +27,7 @@ export class GeneradorRankService {
     // console.log(this.rank);
 
     this._saveAsProject();
+    console.log('Fin del generador de Rank');
   }
 
 
@@ -132,13 +134,18 @@ export class GeneradorRankService {
 
   private _saveAsProject() {
     // const aux = JSON.stringify(this.rank, null, '\t');
-    const aux = JSON.stringify(this.rank, null, 4);
+    // const aux = JSON.stringify(this.rank, null, 4);
+    const aux = `export class ${this.identificador} { public static info =` + JSON.stringify(this.rank, null, 4) + ';}';
+    // `${this.url}/pokemones.json`
+
+    // const aux = JSON.stringify(this.rank);
+    // console.log(aux);
     this._writeContents(aux, this.identificador + '.txt', 'text/plain');
   }
 
   private _writeContents(content, fileName, contentType) {
-    const a = document.createElement('a');
-    const file = new Blob([content], { type: contentType });
+    let a = document.createElement('a');
+    let file = new Blob([content], { type: contentType });
     a.href = URL.createObjectURL(file);
     a.download = fileName;
     a.click();
